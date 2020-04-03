@@ -1,21 +1,159 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class PlayerController : MonoBehaviour
 {
     #region Components
     Rigidbody2D rb2D;
+    //Composant enfant pour afficher le dash
+    LineRenderer dashLine;
     #endregion
 
+    [Tooltip("Les objets possédant ce layermask seront des plateformes pour le joueur")]
+    [SerializeField] LayerMask glassMask;
+
+    #region Movements
+    bool isInTheAir;
+    [Header("Aerial control")]
+    public float airControl;
+    public float fallMultiplier;
+
+    [Header("Grounded control")]
+    public float horizontalSpeed;
+    #endregion
+
+    #region Dash
+    bool dashing;
+    bool preparingDash;
+    Vector2 dashAcceleration = Vector2.zero;
+    Vector3 firstMousePosition;
+
+    #endregion
     void Start()
     {
-
+        isInTheAir = true;
+        rb2D = GetComponent<Rigidbody2D>();
+        dashLine = GetComponentInChildren<LineRenderer>();
     }
 
-    void Update()
+    void FixedUpdate()
+    {
+        //Vérifie constamment si le joueur n'est pas dans les airs
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.75f, glassMask);
+
+        if (hit.collider != null)
+            isInTheAir = false;
+
+        else
+            isInTheAir = true;
+
+        //Si le joueur n'est pas en train de dasher, on lui applique la physique normale
+        if (!dashing)
+        {
+            if (!isInTheAir)
+            {
+                rb2D.velocity += new Vector2(Input.GetAxis("Horizontal") * horizontalSpeed * Time.deltaTime, 0f);
+            }
+            else
+            {
+                if (rb2D.velocity.x > 0 && Input.GetAxis("Horizontal") < 0)
+                {
+                    rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+                }
+                else if (rb2D.velocity.x < 0 && Input.GetAxis("Horizontal") > 0)
+                {
+                    rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+                }
+
+                rb2D.velocity += new Vector2((airControl * Input.GetAxis("Horizontal") * Time.deltaTime), (fallMultiplier - Input.GetAxis("Vertical") * fallMultiplier) * Time.deltaTime * Physics2D.gravity.y);
+            }
+            rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, 30f);
+        }
+    }
+
+    private void Update()
+    {
+        //Au moment où on appuie pour dash, on ralentit le joueur
+        if (Input.GetButtonDown("Fire1") && !dashing)
+        {
+            firstMousePosition = Input.mousePosition;
+            StartCoroutine(WaitBeforeDashDeceleration(0.5f));
+            //DashDrawer.ClearLine(dashLine);
+        }
+        //Dessine une ligne tant que le bouton est appuyé
+        if (Input.GetButton("Fire1") && dashing)
+        {
+            Vector3 newMousePos = Input.mousePosition;
+            //Debug.Log("First mouse pos : " + firstMousePosition);
+            //Debug.Log("newMousePos : " + newMousePos);
+            //Debug.Log(firstMousePosition - newMousePos);
+            DashDrawer.DrawLine(dashLine, transform.position - (firstMousePosition - newMousePos) / 100, transform.position, Color.black, 0.15f);
+
+        }
+
+        if (Input.GetButtonUp("Fire1"))
+        {
+            //if (dashAcceleration != Vector2.zero && dashAcceleration != null)
+            //{
+            preparingDash = false;
+            Dash(GetDashForce(dashLine.GetPosition(0) - dashLine.GetPosition(1)), 2f);
+            Debug.Log("Dash !");
+            //}
+            StartCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));
+            StopCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));
+        }
+    }
+
+    Vector2 GetDashForce(/*Vector2 acceleration*/Vector3 distance)
     {
 
+        //Vector3 distance = Camera.main.WorldToScreenPoint(transform.position) - Input.mousePosition;
+        //Vector3 distance = dashLine.GetPosition(0) - dashLine.GetPosition(1);
+        //F = m x a (et plus on est proche, moins ça va dash loin, quoique osef de l'acceleration)
+        Vector2 force = rb2D.mass * distance /* * acceleration */;
+        return force;
     }
+
+    IEnumerator WaitBeforeDashDeceleration(float dashDecelerationTime)
+    {
+        Vector2 oldVelocity = rb2D.velocity;
+        dashing = true;
+        preparingDash = true;
+        float timer = 0f;
+        float lerpValue = 0;
+
+        while (rb2D.velocity != Vector2.zero && preparingDash)
+        {
+            rb2D.velocity = Vector2.Lerp(oldVelocity, Vector2.zero, lerpValue);
+            lerpValue += Time.deltaTime;
+            yield return new WaitForSeconds(dashDecelerationTime * Time.deltaTime);
+            timer += dashDecelerationTime * Time.deltaTime;
+        }
+
+        dashAcceleration = CalculateAcceleration(oldVelocity, rb2D.velocity, timer);
+
+        StopCoroutine(WaitBeforeDashDeceleration(dashDecelerationTime));
+    }
+
+    Vector2 CalculateAcceleration(Vector2 oldVelocity, Vector2 newVelocity, float timeBetween)
+    {
+        return (oldVelocity - newVelocity) / timeBetween;
+    }
+
+    void Dash(Vector2 force, float dashTime)
+    {
+        rb2D.AddForce(-force * 100);
+        dashAcceleration = Vector2.zero;
+        Invoke(nameof(SlowDown), dashTime);
+    }
+
+    void SlowDown()
+    {
+        dashing = false;
+        //rb2D.velocity = rb2D.velocity / 10;
+    }
+
 }
