@@ -9,9 +9,10 @@ public class LanceVerreAnim : MonoBehaviour
     [SerializeField] float animSpeedCritical;
 
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        anim = GetComponent <Animator> ();
+        anim = GetComponent<Animator>();
         anim.speed = animSpeed;
     }
 
@@ -19,7 +20,7 @@ public class LanceVerreAnim : MonoBehaviour
     {
         anim.SetTrigger("Open");
         anim.SetBool("isCritical", isCritical);
-        if(isCritical)
+        if (isCritical)
             anim.speed = animSpeedCritical;
         else
             anim.speed = animSpeed;

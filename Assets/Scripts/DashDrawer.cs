@@ -9,8 +9,8 @@ public static class DashDrawer
     public static void DrawLine(LineRenderer line, Vector3 startPoint, Vector3 endPoint, Color color, float width)
     {
         line.positionCount = 2;
-        line.SetPosition(0, startPoint);
-        line.SetPosition(1, endPoint);
+        line.SetPosition(0, new Vector3(startPoint.x, startPoint.y, -0.1f));
+        line.SetPosition(1, new Vector3(endPoint.x, endPoint.y, -0.1f));
         line.startColor = color;
         line.startWidth = width;
     }
@@ -42,11 +42,12 @@ public static class DashDrawer
         //yt = v0y*t - 1/2 * g * t²
         line.positionCount = numberOfPoints;
         line.startColor = color;
+        line.endColor = color;
         line.startWidth = 0.1f;
         for (int i = 0; i < numberOfPoints; i++)
         {
             Vector3 pos = CalculatePosInTime(startPos, initialVelocity, i / (float)numberOfPoints);
-            line.SetPosition(i, pos);
+            line.SetPosition(i, new Vector3(pos.x, pos.y, -0.1f));
         }
     }
 

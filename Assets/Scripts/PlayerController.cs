@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask glassMask;
 
     #region Movements
-    bool hasControl = true;
+    [HideInInspector] public bool hasControl = true;
     [HideInInspector] public bool isInTheAir;
     [Header("Aerial control")]
     public float airControl;

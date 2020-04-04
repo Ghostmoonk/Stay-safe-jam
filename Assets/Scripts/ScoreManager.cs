@@ -18,21 +18,25 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        score += 1;
-        textScore.text = "Score = " + score;
-
-        if(score%600 == 0)
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().hasControl)
         {
-            if(GlassManager.nbrOfGlassPerMinutes>6)
-            {
-                GlassManager.nbrOfGlassPerMinutes -= 1;
-            }
+            score += 1;
+            textScore.text = "Score = " + score;
 
-            if(GlassManager.difficulty<8)
+            if (score % 600 == 0)
             {
-                GlassManager.difficulty = 1;
+                if (GlassManager.nbrOfGlassPerMinutes > 6)
+                {
+                    GlassManager.nbrOfGlassPerMinutes -= 1;
+                }
+
+                if (GlassManager.difficulty < 8)
+                {
+                    GlassManager.difficulty = 1;
+                }
             }
         }
+
 
     }
 }

@@ -42,12 +42,12 @@ public class GlassManager : MonoBehaviour
 
         //On choisit un verre prefab au hazard
         int rndGlass = Random.Range(0, glassPrefabs.Length);
-        bool willJump = Mathf.Round(Random.Range(0, 10-difficulty)) == 0 ? true : false;
+        bool willJump = Mathf.Round(Random.Range(0, 10 - difficulty)) == 0 ? true : false;
         if (!hasPlayerSpawned)
             willJump = false;
 
         // on crée un verre
-        GameObject glassIns = Instantiate(glassPrefabs[rndGlass], transform.position + new Vector3(0f,-0.1f,0.0f), Quaternion.identity);
+        GameObject glassIns = Instantiate(glassPrefabs[rndGlass], transform.position + new Vector3(0f, -0.1f, 0.0f), Quaternion.identity);
         glassIns.GetComponent<GlassBehaviour>().whereItSpawned = spawnpoint;
         glassIns.GetComponent<GlassBehaviour>().isjumpingAtStart = willJump;
 
@@ -57,12 +57,12 @@ public class GlassManager : MonoBehaviour
         //on lui set sa position;
         glassIns.transform.position = spawnpoint.transform.position;
 
-        if(!hasPlayerSpawned)
+        if (!hasPlayerSpawned)
         {
             StartCoroutine(CreatePlayer(spawnpoint.transform.position));
         }
-
-        spawnpoint.PlayAnim(willJump);
+        if (spawnpoint != null)
+            spawnpoint.PlayAnim(willJump);
 
         //on répéte la création x secondes plus tard
         Invoke("CreateAGlass", 60f / nbrOfGlassPerMinutes);
@@ -73,9 +73,9 @@ public class GlassManager : MonoBehaviour
         //on recupere dans un tableau tt les points disponibles 
         List<SpawnPoint> spawnPointsFree = new List<SpawnPoint>();
 
-        foreach(SpawnPoint spawnpoint in spawnPoints)
+        foreach (SpawnPoint spawnpoint in spawnPoints)
         {
-            if(!spawnpoint.isHavingAGlassAbove)
+            if (!spawnpoint.isHavingAGlassAbove)
             {
                 spawnPointsFree.Add(spawnpoint);
             }
@@ -97,8 +97,8 @@ public class GlassManager : MonoBehaviour
     [MenuItem("MenuDebug/GiveDebugInfos")]
     static void DebugInfos()
     {
-        Debug.Log("Nombre de verre/mins ="+nbrOfGlassPerMinutes);
-        Debug.Log("Diff ="+difficulty);
+        Debug.Log("Nombre de verre/mins =" + nbrOfGlassPerMinutes);
+        Debug.Log("Diff =" + difficulty);
     }
 
     IEnumerator CreatePlayer(Vector2 position)
