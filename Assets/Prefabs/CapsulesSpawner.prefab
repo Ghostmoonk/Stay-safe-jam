@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9947b7aa197a7574bbe06a3c167ec177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRate: 1
+  spawnRate: 4
   shouldSpawnCapsules: 1
   capsulePrefab: {fileID: 5004775892525204496, guid: 002a4ba56e04f7b40896f75ea1ee98e3,
     type: 3}
@@ -61,7 +61,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.40063477, y: 3.2378044}
+  m_Offset: {x: 0.40063477, y: 2.6838894}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -72,5 +72,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 18.09338, y: 4.4609184}
+  m_Size: {x: 18.09338, y: 5.5687485}
   m_EdgeRadius: 0
