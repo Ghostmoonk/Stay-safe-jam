@@ -18,12 +18,17 @@ public class GlassBehaviour : MonoBehaviour
 
     public SpawnPoint whereItSpawned;
 
+    private Collider2D collider;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         forcePoint = GetComponentInChildren<Transform>();
         isIntangible = true;
+        collider = GetComponent<Collider2D>();
+
+        collider.enabled = false;
 
         rb.gravityScale = 0f;
 
@@ -46,6 +51,7 @@ public class GlassBehaviour : MonoBehaviour
         {
             if (!isIntangible)
             {
+                collider.enabled = true;
                 if (transform.position.y < pointY)
                 {
                     transform.position = new Vector2(transform.position.x, pointY);
@@ -68,6 +74,7 @@ public class GlassBehaviour : MonoBehaviour
 
     void Dies()
     {
+        collider.enabled = false;
         rb.velocity = new Vector2(0.0f,0.0f);
         rb.gravityScale = 0.1f;
         isDead = true;

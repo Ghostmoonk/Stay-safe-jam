@@ -24,8 +24,7 @@ public class GlassManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nbrOfGlassPerMinutes = 10;
-        Debug.Log("test0");
+        nbrOfGlassPerMinutes = 40;
 
         if (isTheSpawnerStarting)
             CreateAGlass();
@@ -34,12 +33,8 @@ public class GlassManager : MonoBehaviour
     //pour créer un verre
     void CreateAGlass()
     {
-        Debug.Log("test1");
-
         //on va chercher un point pour faire spawn
         SpawnPoint spawnpoint = ChooseTargetPointToSpawn();
-
-        Debug.Log("test2");
 
         //On choisit un verre prefab au hazard
         int rndGlass = Random.Range(0, glassPrefabs.Length);

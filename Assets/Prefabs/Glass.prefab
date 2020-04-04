@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3416920026806994668}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 1821615115793653452}
   - component: {fileID: -7342270544145262203}
   - component: {fileID: 2432858429412110272}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 469962274361bfd4ebd2d1d7eef81105, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a59e92598ecde6741b9a93d825ea762b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -131,11 +131,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.47296977, y: 0.18753344}
-  - {x: -0.03251958, y: -0.09495807}
-  - {x: -0.009383142, y: -0.10731959}
-  - {x: 0.009644151, y: -0.10722804}
-  - {x: 0.45958912, y: 0.1862219}
+  - {x: -0.64630127, y: 0.5630849}
+  - {x: -0.06663298, y: -0.05721558}
+  - {x: -0.033335123, y: -0.06812547}
+  - {x: 0.00020850729, y: -0.058598295}
+  - {x: 0.6001241, y: 0.5695051}
 --- !u!50 &-7342270544145262203
 Rigidbody2D:
   serializedVersion: 4
@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6ff9df710be0f438938f65da2c85c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointY: 0
+  pointY: -1
   isjumpingAtStart: 0
   JumpStr: 0.5
+  whereItSpawned: {fileID: 0}
