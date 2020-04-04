@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         playing = true;
         defeatCanvas = GameObject.FindGameObjectWithTag("GameUI").GetComponent<Canvas>();
         defeatCanvas.gameObject.SetActive(false);
+
     }
 
     public void DisplayDefeatHUD()
