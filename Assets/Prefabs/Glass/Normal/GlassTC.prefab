@@ -270,4 +270,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d94e23159e5624b8ece205f2e00400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostMultiplier: 1.75
+  boostMultiplier: 1.5
