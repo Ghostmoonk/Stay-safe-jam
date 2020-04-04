@@ -43,6 +43,8 @@ public class GlassManager : MonoBehaviour
         //On choisit un verre prefab au hazard
         int rndGlass = Random.Range(0, glassPrefabs.Length);
         bool willJump = Mathf.Round(Random.Range(0, 10-difficulty)) == 0 ? true : false;
+        if (!hasPlayerSpawned)
+            willJump = false;
 
         // on crée un verre
         GameObject glassIns = Instantiate(glassPrefabs[rndGlass], transform.position, Quaternion.identity);
@@ -102,5 +104,6 @@ public class GlassManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Instantiate(playerPrefab, new Vector2(position.x, 7f + position.y), Quaternion.identity);
         hasPlayerSpawned = true;
+        StopAllCoroutines();
     }
 }

@@ -358,12 +358,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!223 &431981984 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 1589133196682561628, guid: 4840635911489a545830de16cfdb69e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1983513227}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &534184841
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,6 +551,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2723041343815669944, guid: 9787d425f845eb743977138ce3fbf7b9,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7560bcaaee28ae0429e1a92e6993bd09,
+        type: 3}
     - target: {fileID: 4621655606245887326, guid: 9787d425f845eb743977138ce3fbf7b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -868,7 +868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06216484033e85944bb48c282a557838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defeatCanvas: {fileID: 431981984}
 --- !u!4 &1054235666
 Transform:
   m_ObjectHideFlags: 0
@@ -1674,6 +1673,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589133196682561601, guid: 4840635911489a545830de16cfdb69e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1589133196682561629, guid: 4840635911489a545830de16cfdb69e7,
         type: 3}

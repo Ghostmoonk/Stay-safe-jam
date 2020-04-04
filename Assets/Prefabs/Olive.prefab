@@ -100,9 +100,9 @@ MonoBehaviour:
   glassMask:
     serializedVersion: 2
     m_Bits: 256
-  airControl: 8
-  fallMultiplier: 2
-  horizontalSpeed: 25
+  airControl: 10
+  fallMultiplier: 0.5
+  horizontalSpeed: 20
   dashCapacity: 10
   prepareDashTime: 3
   haveControlDuringDash: 1
