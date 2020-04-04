@@ -5,6 +5,7 @@ using UnityEngine;
 public class GlassBehaviour : MonoBehaviour
 {
     Rigidbody2D rb;
+    [SerializeField] float heightBonusToLandOnTable;
 
     //pour savoir si le verre arrive en sautant
     public bool isjumpingAtStart;
@@ -55,9 +56,9 @@ public class GlassBehaviour : MonoBehaviour
         {
             if (!isIntangible)
             {
-                if (transform.position.y < colliderTable.bounds.max.y+2f)
+                if (transform.position.y < colliderTable.bounds.max.y+2f + heightBonusToLandOnTable)
                 {
-                    transform.position = new Vector2(transform.position.x, colliderTable.bounds.max.y + 2f);
+                    transform.position = new Vector2(transform.position.x, colliderTable.bounds.max.y + 2f + heightBonusToLandOnTable);
                     rb.gravityScale = 0.0f;
                 }
                 else
@@ -67,7 +68,7 @@ public class GlassBehaviour : MonoBehaviour
             }
             else
             {
-                if (transform.position.y > colliderTable.bounds.max.y + 2f)
+                if (transform.position.y > colliderTable.bounds.max.y + 2f + heightBonusToLandOnTable)
                 {
                     isIntangible = false;
                     rb.gravityScale = 1.0f;

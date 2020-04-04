@@ -227,6 +227,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6ff9df710be0f438938f65da2c85c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+=======
+  heightBonusToLandOnTable: 0.35
+>>>>>>> 95bf21efadbe8eb6b1084070cf4edfef29c8bafa
   isjumpingAtStart: 0
   JumpStr: 0.5
   whereItSpawned: {fileID: 0}
