@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
 
     void Dash(Vector2 force, float dashTime)
     {
+        GetComponent<ParticleOlive>().PlayParticle();
         dashing = true;
         dashCapacity--;
         PlayerUIManager.Instance.UpdateDashAmount(dashCapacity);
