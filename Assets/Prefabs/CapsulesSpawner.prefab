@@ -46,6 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnRate: 4
   shouldSpawnCapsules: 1
+  capsuleMask:
+    serializedVersion: 2
+    m_Bits: 512
   capsulePrefab: {fileID: 5004775892525204496, guid: 002a4ba56e04f7b40896f75ea1ee98e3,
     type: 3}
 --- !u!61 &7796830304008781918
