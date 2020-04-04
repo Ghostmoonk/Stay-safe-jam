@@ -27,10 +27,11 @@ public class GlassBehaviour : MonoBehaviour
         forcePoint = GetComponentInChildren<Transform>();
         isIntangible = true;
         collider = GetComponent<Collider2D>();
-
-        collider.enabled = false;
+        Collider2D colliderTable = GameObject.FindGameObjectWithTag("table").GetComponent<Collider2D>();
 
         rb.gravityScale = 0f;
+
+        Physics2D.IgnoreCollision(collider,colliderTable);
 
         if(isjumpingAtStart)
         {
@@ -57,13 +58,13 @@ public class GlassBehaviour : MonoBehaviour
                 if (transform.position.y < pointY)
                 {
                     transform.position = new Vector2(transform.position.x, pointY);
+                    rb.gravityScale = 0.0f;
                 }
             }
             else
             {
                 if (transform.position.y > pointY)
                 {
-                    collider.enabled = true;
                     isIntangible = false;
                     rb.gravityScale = 1.0f;
                 }
@@ -77,7 +78,6 @@ public class GlassBehaviour : MonoBehaviour
 
     void Dies()
     {
-        collider.enabled = false;
         rb.velocity = new Vector2(0.0f,0.0f);
         rb.gravityScale = 0.1f;
         isDead = true;
