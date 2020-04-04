@@ -6,6 +6,8 @@ TagManager:
   tags:
   - table
   - CapsulesHolder
+  - Booster
+  - GameUI
   layers:
   - Default
   - TransparentFX

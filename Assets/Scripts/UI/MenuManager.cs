@@ -14,8 +14,5 @@ public class MenuManager : MonoBehaviour
         oliveImg.transform.position = new Vector3(oliveImg.transform.position.x, buttonTransform.position.y);
     }
 
-    public void ShiftColor(Button baseButton)
-    {
 
-    }
 }

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    [SerializeField] Canvas defeatCanvas;
+    Canvas defeatCanvas;
     bool playing;
 
     private void Awake()
@@ -21,10 +21,17 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnEnable()
+    {
+        playing = true;
+        defeatCanvas = GameObject.FindGameObjectWithTag("GameUI").GetComponent<Canvas>();
+        defeatCanvas.gameObject.SetActive(false);
+    }
 
     public void DisplayDefeatHUD()
     {
-        defeatCanvas.gameObject.SetActive(true);
+        if (defeatCanvas != null)
+            defeatCanvas.gameObject.SetActive(true);
         playing = false;
     }
 

@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
                     xAerialVelocity = airControl * Input.GetAxis("Horizontal") * Time.deltaTime;
                 }
 
-                rb2D.velocity += new Vector2(xAerialVelocity, (fallMultiplier - Input.GetAxis("Vertical") * fallMultiplier) * Time.deltaTime * Physics2D.gravity.y);
+                rb2D.velocity += new Vector2(xAerialVelocity, (fallMultiplier - Input.GetAxis("Vertical") * fallMultiplier) * Time.deltaTime * Physics2D.gravity.y / 10);
             }
             rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, 30f);
         }
@@ -228,5 +228,9 @@ public class PlayerController : MonoBehaviour
     {
         UpdateControl(false);
         GameManager.Instance.DisplayDefeatHUD();
+    }
+    public void Boost(float multiplier)
+    {
+        rb2D.velocity = rb2D.velocity * multiplier;
     }
 }

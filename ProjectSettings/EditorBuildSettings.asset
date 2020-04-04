@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: f2603b8e046dbac4e999dbc8760c5064
+  - enabled: 1
+    path: Assets/Scenes/tristan.unity
+    guid: cb097821c8353744396e5a40412e0937
   m_configObjects: {}
