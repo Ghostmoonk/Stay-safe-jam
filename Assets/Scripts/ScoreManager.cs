@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour
         score += 1;
         textScore.text = "Score = " + score;
 
-        if(score%300 == 0)
+        if(score%600 == 0)
         {
             if(GlassManager.nbrOfGlassPerMinutes>6)
             {

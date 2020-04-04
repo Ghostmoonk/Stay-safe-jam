@@ -21,7 +21,9 @@ public class GlassManager : MonoBehaviour
     public static int maxGlassLifeTime = 12;
     public static int difficulty = 0;
 
-
+    // --------------------------- [ Instance ] --------------------------------- \\
+    private bool hasPlayerSpawned;
+    [SerializeField] PlayerController playerPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,11 @@ public class GlassManager : MonoBehaviour
 
         //on lui set sa position;
         glassIns.transform.position = spawnpoint.transform.position;
+
+        if(!hasPlayerSpawned)
+        {
+            StartCoroutine(CreatePlayer(spawnpoint.transform.position));
+        }
 
         //on répéte la création x secondes plus tard
         Invoke("CreateAGlass", 60f / nbrOfGlassPerMinutes);
@@ -88,5 +95,12 @@ public class GlassManager : MonoBehaviour
     {
         Debug.Log("Nombre de verre/mins ="+nbrOfGlassPerMinutes);
         Debug.Log("Diff ="+difficulty);
+    }
+
+    IEnumerator CreatePlayer(Vector2 position)
+    {
+        yield return new WaitForSeconds(3f);
+        Instantiate(playerPrefab, new Vector2(position.x, 7f + position.y), Quaternion.identity);
+        hasPlayerSpawned = true;
     }
 }
