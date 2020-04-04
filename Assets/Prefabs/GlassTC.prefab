@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointY: 0
-  isjumpingAtStart: 1
+  isjumpingAtStart: 0
   JumpStr: 0.5
   whereItSpawned: {fileID: 0}
 --- !u!60 &4282915864300323309

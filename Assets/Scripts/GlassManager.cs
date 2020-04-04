@@ -19,6 +19,8 @@ public class GlassManager : MonoBehaviour
     public static int nbrOfGlassPerMinutes = 10; // frequence à la minute d'apparition de verres;
     public static int minGlassLifeTime = 8;
     public static int maxGlassLifeTime = 12;
+    public static int difficulty = 0;
+
 
 
     // Start is called before the first frame update
@@ -38,10 +40,12 @@ public class GlassManager : MonoBehaviour
 
         //On choisit un verre prefab au hazard
         int rndGlass = Random.Range(0, glassPrefabs.Length);
+        bool willJump = Mathf.Round(Random.Range(0, 10-difficulty)) == 0 ? true : false;
 
         // on crée un verre
         GameObject glassIns = Instantiate(glassPrefabs[rndGlass], transform.position, Quaternion.identity);
         glassIns.GetComponent<GlassBehaviour>().whereItSpawned = spawnpoint;
+        glassIns.GetComponent<GlassBehaviour>().isjumpingAtStart = willJump;
 
         //on lui set son parent
         glassIns.transform.SetParent(glassHolder.transform);
@@ -83,5 +87,6 @@ public class GlassManager : MonoBehaviour
     static void DebugInfos()
     {
         Debug.Log("Nombre de verre/mins ="+nbrOfGlassPerMinutes);
+        Debug.Log("Diff ="+difficulty);
     }
 }

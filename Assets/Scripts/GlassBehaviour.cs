@@ -60,6 +60,10 @@ public class GlassBehaviour : MonoBehaviour
                     transform.position = new Vector2(transform.position.x, pointY);
                     rb.gravityScale = 0.0f;
                 }
+                else
+                {
+                    //rb.gravityScale = -0.1f;
+                }
             }
             else
             {
