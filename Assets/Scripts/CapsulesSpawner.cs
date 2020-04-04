@@ -31,6 +31,7 @@ public class CapsulesSpawner : MonoBehaviour
     Collider2D spawnArea;
     #endregion
     float areaHeight;
+    [SerializeField] LayerMask capsuleMask;
 
     [SerializeField] GameObject capsulePrefab;
 
@@ -77,7 +78,18 @@ public class CapsulesSpawner : MonoBehaviour
     {
         float randXPos = Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x);
         float randYPos = Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y);
-        return new Vector2(randXPos, randYPos);
+        Vector2 randomPos = new Vector2(randXPos, randYPos);
+
+        Collider2D col = Physics2D.OverlapCircle(randomPos, 5f, capsuleMask);
+        while (col != null)
+        {
+            randXPos = Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x);
+            randYPos = Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y);
+            randomPos = new Vector2(randXPos, randYPos);
+            col = Physics2D.OverlapCircle(randomPos, 5f, capsuleMask);
+        }
+
+        return randomPos;
     }
 
 }
