@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     #region Components
     Rigidbody2D rb2D;
     //Composant enfant pour afficher le dash
-    LineRenderer dashLine;
+    [SerializeField] LineRenderer dashLine;
+    [SerializeField] LineRenderer trajectoryLine;
     #endregion
 
     [Tooltip("Les objets possédant ce layermask seront des plateformes pour le joueur")]
@@ -40,7 +41,6 @@ public class PlayerController : MonoBehaviour
     {
         isInTheAir = true;
         rb2D = GetComponent<Rigidbody2D>();
-        dashLine = GetComponentInChildren<LineRenderer>();
 
         PlayerUIManager.Instance.UpdateDashAmount(dashCapacity);
     }
@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("newMousePos : " + newMousePos);
             //Debug.Log(firstMousePosition - newMousePos);
             DashDrawer.DrawLine(dashLine, transform.position - (firstMousePosition - newMousePos) / 100, transform.position, Color.black, 0.15f);
+            DashDrawer.DrawTajectoryLine(trajectoryLine, Color.white, transform.position, 100, (firstMousePosition - newMousePos) / 50f);
         }
 
         if (Input.GetButtonUp("Fire1") && preparingDash)
@@ -123,6 +124,7 @@ public class PlayerController : MonoBehaviour
             //}
             StartCoroutine(DashDrawer.FadeLine(dashLine, 0.1f));
             StopCoroutine(DashDrawer.FadeLine(dashLine, 0.1f));
+            DashDrawer.ClearLine(trajectoryLine);
         }
     }
 
@@ -158,13 +160,13 @@ public class PlayerController : MonoBehaviour
             if (preparingDash)
             {
                 rb2D.velocity = Vector2.zero;
-                Debug.Log("Attente :" + timer);
 
             }
             timer += Time.deltaTime;
         }
         if (timer >= prepareDashTime)
         {
+            DashDrawer.ClearLine(trajectoryLine);
             Debug.Log(preparingDash);
             preparingDash = false;
             StartCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));

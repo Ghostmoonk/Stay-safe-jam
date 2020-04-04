@@ -36,4 +36,31 @@ public static class DashDrawer
             ClearLine(line);
         }
     }
+
+    public static void DrawTajectoryLine(LineRenderer line, Color color, Vector3 startPos, int numberOfPoints, Vector2 initialVelocity)
+    {
+        //yt = v0y*t - 1/2 * g * t²
+        line.positionCount = numberOfPoints;
+        line.startColor = color;
+        line.startWidth = 0.1f;
+        for (int i = 0; i < numberOfPoints; i++)
+        {
+            Vector3 pos = CalculatePosInTime(startPos, initialVelocity, i / (float)numberOfPoints);
+            line.SetPosition(i, pos);
+        }
+    }
+
+    public static Vector3 CalculatePosInTime(Vector2 startPos, Vector2 vo, float time)
+    {
+        Vector3 initialVelocity = vo;
+        initialVelocity.y = 0f;
+
+        Vector3 result = startPos + vo * time;
+
+        float sY = (-0.5f * Mathf.Abs(Physics2D.gravity.y) * (time * time)) + (vo.y * time) + startPos.y;
+
+        result.y = sY;
+
+        return result;
+    }
 }
