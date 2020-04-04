@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
         isInTheAir = true;
         rb2D = GetComponent<Rigidbody2D>();
         dashLine = GetComponentInChildren<LineRenderer>();
+
+        PlayerUIManager.Instance.UpdateDashAmount(dashCapacity);
     }
 
     void FixedUpdate()
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                //Permet de changer de direction instantanément
                 if (rb2D.velocity.x > 0 && Input.GetAxis("Horizontal") < 0)
                 {
                     rb2D.velocity = new Vector2(0, rb2D.velocity.y);
@@ -74,7 +77,18 @@ public class PlayerController : MonoBehaviour
                     rb2D.velocity = new Vector2(0, rb2D.velocity.y);
                 }
 
-                rb2D.velocity += new Vector2((airControl * Input.GetAxis("Horizontal") * Time.deltaTime), (fallMultiplier - Input.GetAxis("Vertical") * fallMultiplier) * Time.deltaTime * Physics2D.gravity.y);
+                //Si on va vers le haut, on ralentit la chute, mais on veut un plus faible air control
+                float xAerialVelocity = 0f;
+                if (Input.GetAxisRaw("Vertical") > 0)
+                {
+                    xAerialVelocity = Mathf.Sqrt(airControl) * Input.GetAxis("Horizontal") * Time.deltaTime;
+                }
+                else
+                {
+                    xAerialVelocity = airControl * Input.GetAxis("Horizontal") * Time.deltaTime;
+                }
+
+                rb2D.velocity += new Vector2(xAerialVelocity, (fallMultiplier - Input.GetAxis("Vertical") * fallMultiplier) * Time.deltaTime * Physics2D.gravity.y);
             }
             rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, 30f);
         }
@@ -172,6 +186,7 @@ public class PlayerController : MonoBehaviour
     {
         dashing = true;
         dashCapacity--;
+        PlayerUIManager.Instance.UpdateDashAmount(dashCapacity);
         rb2D.AddForce(-force * 100);
         dashAcceleration = Vector2.zero;
         if (haveControlDuringDash)
@@ -193,6 +208,8 @@ public class PlayerController : MonoBehaviour
     public void AddDash(int amount)
     {
         dashCapacity += amount;
+
+        PlayerUIManager.Instance.UpdateDashAmount(dashCapacity);
     }
 
 }
