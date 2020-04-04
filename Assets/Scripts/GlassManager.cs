@@ -18,13 +18,13 @@ public class GlassManager : MonoBehaviour
     // ------------------------ [ Difficultée ] ------------------------------ \\
     public static int nbrOfGlassPerMinutes = 10; // frequence à la minute d'apparition de verres;
     public static int minGlassLifeTime = 8;
-    public static int maxGlassLifeTime = 4;
+    public static int maxGlassLifeTime = 12;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        nbrOfGlassPerMinutes = 40;
+        nbrOfGlassPerMinutes = 20;
 
         if (isTheSpawnerStarting)
             CreateAGlass();

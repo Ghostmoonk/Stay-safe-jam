@@ -41,7 +41,10 @@ public class GlassBehaviour : MonoBehaviour
             JumpStr = 0.01f;
         }
 
-        Invoke("Dies", Random.Range(GlassManager.minGlassLifeTime, GlassManager.maxGlassLifeTime));
+        if(whereItSpawned != null)
+        {
+            Invoke("Dies", Random.Range(GlassManager.minGlassLifeTime, GlassManager.maxGlassLifeTime));
+        }
     }
 
     // Update is called once per frame
@@ -51,7 +54,6 @@ public class GlassBehaviour : MonoBehaviour
         {
             if (!isIntangible)
             {
-                collider.enabled = true;
                 if (transform.position.y < pointY)
                 {
                     transform.position = new Vector2(transform.position.x, pointY);
@@ -61,6 +63,7 @@ public class GlassBehaviour : MonoBehaviour
             {
                 if (transform.position.y > pointY)
                 {
+                    collider.enabled = true;
                     isIntangible = false;
                     rb.gravityScale = 1.0f;
                 }
