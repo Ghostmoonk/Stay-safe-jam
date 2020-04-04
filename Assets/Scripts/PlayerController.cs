@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask glassMask;
 
     #region Movements
+    bool hasControl = true;
     bool isInTheAir;
     [Header("Aerial control")]
     public float airControl;
@@ -56,10 +57,10 @@ public class PlayerController : MonoBehaviour
             isInTheAir = true;
 
         //Si le joueur n'est pas en train de dasher, on lui applique la physique normale
-        Debug.Log("Normal physique ? " + (!dashing && !preparingDash));
-        Debug.Log("dashing ? " + dashing);
-        Debug.Log("preparingDash ? " + preparingDash);
-        if (!dashing && !preparingDash)
+        //Debug.Log("Normal physique ? " + (!dashing && !preparingDash));
+        //Debug.Log("dashing ? " + dashing);
+        //Debug.Log("preparingDash ? " + preparingDash);
+        if (!dashing && !preparingDash && hasControl)
         {
             if (!isInTheAir)
             {
@@ -68,14 +69,14 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //Permet de changer de direction instantanément
-                if (rb2D.velocity.x > 0 && Input.GetAxis("Horizontal") < 0)
-                {
-                    rb2D.velocity = new Vector2(0, rb2D.velocity.y);
-                }
-                else if (rb2D.velocity.x < 0 && Input.GetAxis("Horizontal") > 0)
-                {
-                    rb2D.velocity = new Vector2(0, rb2D.velocity.y);
-                }
+                //if (rb2D.velocity.x > 0 && Input.GetAxis("Horizontal") < 0)
+                //{
+                //    rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+                //}
+                //else if (rb2D.velocity.x < 0 && Input.GetAxis("Horizontal") > 0)
+                //{
+                //    rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+                //}
 
                 //Si on va vers le haut, on ralentit la chute, mais on veut un plus faible air control
                 float xAerialVelocity = 0f;
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //Au moment où on appuie pour dash, on ralentit le joueur
-        if (Input.GetButtonDown("Fire1") && !dashing && dashCapacity > 0)
+        if (Input.GetButtonDown("Fire1") && !dashing && dashCapacity > 0 && hasControl)
         {
             firstMousePosition = Input.mousePosition;
             StartCoroutine(WaitBeforeDashDeceleration(0.5f));
@@ -111,7 +112,6 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("newMousePos : " + newMousePos);
             //Debug.Log(firstMousePosition - newMousePos);
             DashDrawer.DrawLine(dashLine, transform.position - (firstMousePosition - newMousePos) / 100, transform.position, Color.black, 0.15f);
-
         }
 
         if (Input.GetButtonUp("Fire1") && preparingDash)
@@ -119,11 +119,10 @@ public class PlayerController : MonoBehaviour
             //if (dashAcceleration != Vector2.zero && dashAcceleration != null)
             //{
             preparingDash = false;
-            Dash(GetDashForce(dashLine.GetPosition(0) - dashLine.GetPosition(1)), 2f);
-            Debug.Log("Dash !");
+            StartCoroutine(WaitBeforeLineFaded(0.1f, dashLine.GetPosition(0) - dashLine.GetPosition(1)));
             //}
-            StartCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));
-            StopCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));
+            StartCoroutine(DashDrawer.FadeLine(dashLine, 0.1f));
+            StopCoroutine(DashDrawer.FadeLine(dashLine, 0.1f));
         }
     }
 
@@ -149,7 +148,7 @@ public class PlayerController : MonoBehaviour
             lerpValue += Time.deltaTime;
             yield return new WaitForSeconds(dashDecelerationTime * Time.deltaTime);
             timer += dashDecelerationTime * Time.deltaTime;
-            Debug.Log("Velocity dash :" + rb2D.velocity);
+            //Debug.Log("Velocity dash :" + rb2D.velocity);
         }
         timer = 0f;
         //S'il prepare encore son dash 
@@ -177,6 +176,14 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(WaitBeforeDashDeceleration(dashDecelerationTime));
     }
 
+    IEnumerator WaitBeforeLineFaded(float fadeLineTime, Vector2 force)
+    {
+        yield return new WaitForSeconds(fadeLineTime);
+
+        StopCoroutine(WaitBeforeLineFaded(fadeLineTime, force));
+        Dash(GetDashForce(force), 2f);
+        Debug.Log("Dash !");
+    }
     Vector2 CalculateAcceleration(Vector2 oldVelocity, Vector2 newVelocity, float timeBetween)
     {
         return (oldVelocity - newVelocity) / timeBetween;
@@ -212,4 +219,14 @@ public class PlayerController : MonoBehaviour
         PlayerUIManager.Instance.UpdateDashAmount(dashCapacity);
     }
 
+    public void UpdateControl(bool control)
+    {
+        hasControl = control;
+    }
+
+    private void OnBecameInvisible()
+    {
+        UpdateControl(false);
+        GameManager.Instance.DisplayDefeatHUD();
+    }
 }

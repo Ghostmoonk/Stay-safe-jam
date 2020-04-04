@@ -58,7 +58,7 @@ public class CapsulesSpawner : MonoBehaviour
     void SpawnCapsule(Vector3 position)
     {
         GameObject capsuleToInstantiate = Instantiate(capsulePrefab, position, Quaternion.identity, GameObject.FindGameObjectWithTag("CapsulesHolder").transform);
-        Debug.Log(Mathf.InverseLerp(0f, areaHeight, position.y - spawnArea.bounds.min.y));
+        //Debug.Log(Mathf.InverseLerp(0f, areaHeight, position.y - spawnArea.bounds.min.y));
         if (Mathf.InverseLerp(0f, areaHeight, position.y - spawnArea.bounds.min.y) <= 0.3f)
         {
             capsuleToInstantiate.GetComponent<Capsule>().charges = 1;
