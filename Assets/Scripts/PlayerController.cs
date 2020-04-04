@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     #region Movements
     bool hasControl = true;
-    bool isInTheAir;
+    [HideInInspector] public bool isInTheAir;
     [Header("Aerial control")]
     public float airControl;
     public float fallMultiplier;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //Vérifie constamment si le joueur n'est pas dans les airs
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.75f, glassMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, glassMask);
 
         if (hit.collider != null)
             isInTheAir = false;
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
                 rb2D.velocity += new Vector2(xAerialVelocity, (fallMultiplier - Input.GetAxis("Vertical") * fallMultiplier) * Time.deltaTime * Physics2D.gravity.y / 10);
             }
-            rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, 30f);
+            rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, 10f);
         }
     }
 
@@ -232,5 +232,10 @@ public class PlayerController : MonoBehaviour
     public void Boost(float multiplier)
     {
         rb2D.velocity = rb2D.velocity * multiplier;
+    }
+
+    public void PushToDirection(Vector2 direction, float strength)
+    {
+        rb2D.velocity += direction * strength;
     }
 }

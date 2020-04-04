@@ -100,7 +100,8 @@ MonoBehaviour:
   glassMask:
     serializedVersion: 2
     m_Bits: 256
-  airControl: 10
+  isInTheAir: 0
+  airControl: 4
   fallMultiplier: 0.5
   horizontalSpeed: 20
   dashCapacity: 10
@@ -140,8 +141,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.52, y: 0.73}
+  m_Offset: {x: 0.00928089, y: -0.002261281}
+  m_Size: {x: 0.40204883, y: 0.4893539}
   m_Direction: 0
 --- !u!1 &2541019469700315352
 GameObject:
