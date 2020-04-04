@@ -47,7 +47,7 @@ public class GlassManager : MonoBehaviour
             willJump = false;
 
         // on crée un verre
-        GameObject glassIns = Instantiate(glassPrefabs[rndGlass], transform.position, Quaternion.identity);
+        GameObject glassIns = Instantiate(glassPrefabs[rndGlass], transform.position + new Vector3(0f,-0.1f,0.0f), Quaternion.identity);
         glassIns.GetComponent<GlassBehaviour>().whereItSpawned = spawnpoint;
         glassIns.GetComponent<GlassBehaviour>().isjumpingAtStart = willJump;
 
@@ -61,6 +61,8 @@ public class GlassManager : MonoBehaviour
         {
             StartCoroutine(CreatePlayer(spawnpoint.transform.position));
         }
+
+        spawnpoint.PlayAnim(willJump);
 
         //on répéte la création x secondes plus tard
         Invoke("CreateAGlass", 60f / nbrOfGlassPerMinutes);
@@ -101,7 +103,7 @@ public class GlassManager : MonoBehaviour
 
     IEnumerator CreatePlayer(Vector2 position)
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.8f);
         Instantiate(playerPrefab, new Vector2(position.x, 7f + position.y), Quaternion.identity);
         hasPlayerSpawned = true;
         StopAllCoroutines();

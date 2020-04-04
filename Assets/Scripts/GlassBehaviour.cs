@@ -86,7 +86,12 @@ public class GlassBehaviour : MonoBehaviour
         rb.velocity = new Vector2(0.0f,0.0f);
         rb.gravityScale = 0.1f;
         isDead = true;
+        Invoke("PreparedDestroy", 3.0f);
+    }
+
+    void PreparedDestroy()
+    {
         whereItSpawned.isHavingAGlassAbove = false;
-        Destroy(gameObject, 3.0f);
+        Destroy(gameObject);
     }
 }
