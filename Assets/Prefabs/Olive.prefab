@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7428805194361930364}
   m_Layer: 0
   m_Name: Olive
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,9 @@ MonoBehaviour:
   airControl: 8
   fallMultiplier: 2
   horizontalSpeed: 25
+  dashCapacity: 10
   prepareDashTime: 3
+  haveControlDuringDash: 1
 --- !u!50 &2751223684694301368
 Rigidbody2D:
   serializedVersion: 4
@@ -152,7 +154,7 @@ GameObject:
   - component: {fileID: 5300125255531575277}
   - component: {fileID: 1074121709862741372}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DashLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +192,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -211,9 +213,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

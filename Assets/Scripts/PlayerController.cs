@@ -26,12 +26,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Dash
+    [SerializeField] int dashCapacity = 0;
     bool dashing;
     bool preparingDash;
+    public float prepareDashTime = 2f;
     Vector2 dashAcceleration = Vector2.zero;
     Vector3 firstMousePosition;
-
+    [SerializeField] bool haveControlDuringDash;
     #endregion
+
     void Start()
     {
         isInTheAir = true;
@@ -51,7 +54,10 @@ public class PlayerController : MonoBehaviour
             isInTheAir = true;
 
         //Si le joueur n'est pas en train de dasher, on lui applique la physique normale
-        if (!dashing)
+        Debug.Log("Normal physique ? " + (!dashing && !preparingDash));
+        Debug.Log("dashing ? " + dashing);
+        Debug.Log("preparingDash ? " + preparingDash);
+        if (!dashing && !preparingDash)
         {
             if (!isInTheAir)
             {
@@ -77,14 +83,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //Au moment où on appuie pour dash, on ralentit le joueur
-        if (Input.GetButtonDown("Fire1") && !dashing)
+        if (Input.GetButtonDown("Fire1") && !dashing && dashCapacity > 0)
         {
             firstMousePosition = Input.mousePosition;
             StartCoroutine(WaitBeforeDashDeceleration(0.5f));
             //DashDrawer.ClearLine(dashLine);
         }
         //Dessine une ligne tant que le bouton est appuyé
-        if (Input.GetButton("Fire1") && dashing)
+        if (Input.GetButton("Fire1") && preparingDash)
         {
             Vector3 newMousePos = Input.mousePosition;
             //Debug.Log("First mouse pos : " + firstMousePosition);
@@ -94,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1") && preparingDash)
         {
             //if (dashAcceleration != Vector2.zero && dashAcceleration != null)
             //{
@@ -120,17 +126,36 @@ public class PlayerController : MonoBehaviour
     IEnumerator WaitBeforeDashDeceleration(float dashDecelerationTime)
     {
         Vector2 oldVelocity = rb2D.velocity;
-        dashing = true;
         preparingDash = true;
         float timer = 0f;
         float lerpValue = 0;
-
-        while (rb2D.velocity != Vector2.zero && preparingDash)
+        while (lerpValue <= 1f && preparingDash)
         {
             rb2D.velocity = Vector2.Lerp(oldVelocity, Vector2.zero, lerpValue);
             lerpValue += Time.deltaTime;
             yield return new WaitForSeconds(dashDecelerationTime * Time.deltaTime);
             timer += dashDecelerationTime * Time.deltaTime;
+            Debug.Log("Velocity dash :" + rb2D.velocity);
+        }
+        timer = 0f;
+        //S'il prepare encore son dash 
+        while (preparingDash && timer < prepareDashTime)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            if (preparingDash)
+            {
+                rb2D.velocity = Vector2.zero;
+                Debug.Log("Attente :" + timer);
+
+            }
+            timer += Time.deltaTime;
+        }
+        if (timer >= prepareDashTime)
+        {
+            Debug.Log(preparingDash);
+            preparingDash = false;
+            StartCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));
+            StopCoroutine(DashDrawer.FadeLine(dashLine, 0.3f));
         }
 
         dashAcceleration = CalculateAcceleration(oldVelocity, rb2D.velocity, timer);
@@ -145,15 +170,29 @@ public class PlayerController : MonoBehaviour
 
     void Dash(Vector2 force, float dashTime)
     {
+        dashing = true;
+        dashCapacity--;
         rb2D.AddForce(-force * 100);
         dashAcceleration = Vector2.zero;
-        Invoke(nameof(SlowDown), dashTime);
+        if (haveControlDuringDash)
+        {
+            dashing = false;
+        }
+        else
+        {
+            Invoke(nameof(SlowDown), dashTime);
+        }
     }
 
     void SlowDown()
     {
         dashing = false;
-        //rb2D.velocity = rb2D.velocity / 10;
+        //rb2D.velocity = Vector2.zero;
+    }
+
+    public void AddDash(int amount)
+    {
+        dashCapacity += amount;
     }
 
 }
