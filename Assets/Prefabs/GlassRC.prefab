@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1026586664
+--- !u!1 &1577354451
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,70 +8,70 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1026586665}
-  - component: {fileID: 1026586668}
-  - component: {fileID: 1026586667}
-  - component: {fileID: 1026586666}
+  - component: {fileID: 1577354452}
+  - component: {fileID: 1577354455}
+  - component: {fileID: 1577354454}
+  - component: {fileID: 1577354453}
   m_Layer: 8
-  m_Name: Booster
+  m_Name: 'Booster '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1026586665
+--- !u!4 &1577354452
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026586664}
+  m_GameObject: {fileID: 1577354451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.094, y: 1.094, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 1821615115793653453}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1026586668
+--- !u!58 &1577354455
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026586664}
+  m_GameObject: {fileID: 1577354451}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.43, y: 0.38}
+  m_Offset: {x: -0.24, y: 0.44}
   serializedVersion: 2
   m_Radius: 0.09757989
---- !u!58 &1026586667
+--- !u!58 &1577354454
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026586664}
+  m_GameObject: {fileID: 1577354451}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.29, y: 0.38}
+  m_Offset: {x: 0.43, y: 0.46}
   serializedVersion: 2
-  m_Radius: 0.11
---- !u!114 &1026586666
+  m_Radius: 0.09757989
+--- !u!114 &1577354453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1026586664}
+  m_GameObject: {fileID: 1577354451}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d94e23159e5624b8ece205f2e00400, type: 3}
@@ -137,10 +137,10 @@ Transform:
   m_GameObject: {fileID: 1821615115793653455}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.3025255, y: -0.19268967, z: 40.4331}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.188, y: 2.188, z: 2.188}
   m_Children:
   - {fileID: 3416920026806994668}
-  - {fileID: 1026586665}
+  - {fileID: 1577354452}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -223,15 +223,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821615115793653455}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb6ff9df710be0f438938f65da2c85c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-=======
   heightBonusToLandOnTable: 0.35
->>>>>>> 95bf21efadbe8eb6b1084070cf4edfef29c8bafa
   isjumpingAtStart: 0
   JumpStr: 0.5
   whereItSpawned: {fileID: 0}
